@@ -19,7 +19,7 @@
                 "When_a_file_is_modified": {
                     "recurrence": {
                         "frequency": "Second",
-                        "interval": 120
+                        "interval": 10
                     },
                     "metadata": {
                         "id:0ApjaMVmq28AAAAAAAANsw": "/centipede"
