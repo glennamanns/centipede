@@ -1,0 +1,112 @@
+{
+    "properties": {
+        "provisioningState": "Succeeded",
+        "createdTime": "2017-06-15T22:24:12.1012235Z",
+        "changedTime": "2017-06-15T22:24:12.3089417Z",
+        "state": "Enabled",
+        "version": "08587040414334328351",
+        "accessEndpoint": "https://prod-61.westus.logic.azure.com:443/workflows/6dcd98e2e32146f1a73eeb4a3d9caf9b",
+        "definition": {
+            "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {
+                "$connections": {
+                    "defaultValue": {},
+                    "type": "Object"
+                }
+            },
+            "triggers": {
+                "When_a_file_is_modified": {
+                    "recurrence": {
+                        "frequency": "Second",
+                        "interval": 30
+                    },
+                    "metadata": {
+                        "id:0ApjaMVmq28AAAAAAAANsw": "/centipede"
+                    },
+                    "type": "ApiConnection",
+                    "inputs": {
+                        "host": {
+                            "api": {
+                                "runtimeUrl": "https://logic-apis-westus.azure-apim.net/apim/dropbox"
+                            },
+                            "connection": {
+                                "name": "@parameters('$connections')['dropbox']['connectionId']"
+                            }
+                        },
+                        "method": "get",
+                        "path": "/datasets/default/triggers/onupdatedfile",
+                        "queries": {
+                            "folderId": "id:0ApjaMVmq28AAAAAAAANsw",
+                            "includeFileContent": true,
+                            "inferContentType": true
+                        }
+                    }
+                }
+            },
+            "actions": {
+                "pumper": {
+                    "runAfter": {},
+                    "type": "Function",
+                    "inputs": {
+                        "function": {
+                            "id": "/subscriptions/0d3ae56c-deaf-4982-b514-33d016d4a683/resourceGroups/centipede/providers/Microsoft.Web/sites/bk-centipede-func/functions/pumper"
+                        },
+                        "queries": {
+                            "filename": "@{triggerOutputs()['headers']['x-ms-file-name']}"
+                        }
+                    }
+                }
+            },
+            "outputs": {}
+        },
+        "parameters": {
+            "$connections": {
+                "value": {
+                    "dropbox": {
+                        "connectionId": "/subscriptions/0d3ae56c-deaf-4982-b514-33d016d4a683/resourceGroups/centipede/providers/Microsoft.Web/connections/dropbox",
+                        "connectionName": "dropbox",
+                        "id": "/subscriptions/0d3ae56c-deaf-4982-b514-33d016d4a683/providers/Microsoft.Web/locations/westus/managedApis/dropbox"
+                    }
+                }
+            }
+        },
+        "endpointsConfiguration": {
+            "workflow": {
+                "outgoingIpAddresses": [
+                    {
+                        "address": "52.160.92.112"
+                    },
+                    {
+                        "address": "40.118.244.241"
+                    },
+                    {
+                        "address": "40.118.241.243"
+                    }
+                ],
+                "accessEndpointIpAddresses": [
+                    {
+                        "address": "52.160.90.237"
+                    },
+                    {
+                        "address": "138.91.188.137"
+                    },
+                    {
+                        "address": "13.91.252.184"
+                    }
+                ]
+            },
+            "connector": {
+                "outgoingIpAddresses": [
+                    {
+                        "address": "104.40.51.248"
+                    }
+                ]
+            }
+        }
+    },
+    "id": "/workflows/6dcd98e2e32146f1a73eeb4a3d9caf9b",
+    "name": "bk-centipede-logic",
+    "type": "Microsoft.Logic/workflows",
+    "location": "westus"
+}
